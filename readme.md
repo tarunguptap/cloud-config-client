@@ -8,14 +8,17 @@
 
 3. Add a bootstrap.yml (or bootstrap.properties) file in the root of your classpath (src/main/resources recommended).  Add the following key/values using the appropriate format:
 
+```
     spring.application.name=cloud-config-client
     spring.cloud.config.uri=http://localhost:8001  
     server.port=8002
 
     (Note that this file must be "bootstrap" -- not "application" -- so that it is read early in the application startup process.  The server.port could be specified in either file, but the URI to the config server affects the startup sequence.)_
+```
 
 4. Add a REST controller to obtain and display the lucky word:
 
+```
     @RestController
     public class LuckyWordController {
       @Value("${lucky-word}") String luckyWord;
@@ -24,9 +27,11 @@
         return "The lucky word is: " + luckyWord;
       }
     }
+```
 
 5.  Start your client.  Open [http://localhost:8002/lucky-word](http://localhost:8002/lucky-word).  You should see the lucky word message in your browser.
 
+```
      (Note: if you receive an error, and your server (above) is working properly, first confirm that your client is actually contacting your server.  The Client's console output should contain lines similar to this:
 
 
@@ -35,6 +40,7 @@
     ... b.c.PropertySourceBootstrapConfiguration : Located property source: CompositePropertySource {name='configService', propertySources=[MapPropertySource {name='configClient'}, ...]}
     
     If you do not see these lines, your client is NOT contacting your server.  Check the items above (application name, config server URI, name / location of your config files, etc.) before proceeding.  
+```
 
   **BONUS - Profiles:**
 
